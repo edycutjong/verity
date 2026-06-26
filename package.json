@@ -2,6 +2,14 @@
   "name": "verity",
   "version": "1.0.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edycutjong/verity.git"
+  },
+  "bugs": {
+    "url": "https://github.com/edycutjong/verity/issues"
+  },
+  "homepage": "https://github.com/edycutjong/verity#readme",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
