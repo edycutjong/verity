@@ -767,6 +767,25 @@ describe("verity core edge cases", () => {
     }
   });
 
+  it("covers all outlier mapping branches in reasonOverSources", () => {
+    const readings: SourceReading[] = [
+      { sourceId: "source_a", value: 100, timestamp: "", reliable: true },
+      { sourceId: "source_b", value: 105, timestamp: "", reliable: true },
+      { sourceId: "source_c", value: 102, timestamp: "", reliable: true },
+      { sourceId: "source_unknown", value: 104, timestamp: "", reliable: true },
+    ];
+    const detectSpy = vi.spyOn(sources, "detectOutliers").mockReturnValue(["source_a", "source_b", "source_unknown"]);
+
+    try {
+      const result = reasonOverSources(readings);
+      expect(result.rationale).toContain("Bloomberg");
+      expect(result.rationale).toContain("Reuters");
+      expect(result.rationale).toContain("source_unknown");
+    } finally {
+      detectSpy.mockRestore();
+    }
+  });
+
   it("assertServerEnv checks keys correctly", () => {
     expect(() => assertServerEnv(["network"])).not.toThrow();
     expect(() => assertServerEnv(["contractHash"])).toThrow("Missing required env: contractHash");
