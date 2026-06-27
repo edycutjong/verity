@@ -113,11 +113,7 @@ impl Verity {
         self.settlements.set(&post_id, ground_truth_bps);
 
         // Compute relative error in basis points.
-        let error = if posted > ground_truth_bps {
-            posted - ground_truth_bps
-        } else {
-            ground_truth_bps - posted
-        };
+        let error = posted.abs_diff(ground_truth_bps);
 
         let relative_error_bps = if ground_truth_bps > 0 {
             (error as u64 * 10000 / ground_truth_bps as u64) as u32
