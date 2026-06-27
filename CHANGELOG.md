@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.0](../../compare/v1.5.0...v1.6.0) (2026-06-27)
+
+### 🚀 Features
+
+- **deck:** embed YouTube walkthrough and add final slide Pitch Video link (bf4c429)
+
 ## [1.5.0](../../compare/v1.4.0...v1.5.0) (2026-06-27)
 
 ### 🚀 Features
