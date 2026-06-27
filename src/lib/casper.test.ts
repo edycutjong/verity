@@ -61,6 +61,7 @@ import {
   postValueOnChain,
   settleOnChain,
   signerPublicKeyHex,
+  loadSignerKey,
 } from "./casper";
 import { config } from "./config";
 
@@ -169,5 +170,16 @@ describe("casper chain layer", () => {
 
   it("generates signer public key hex", () => {
     expect(signerPublicKeyHex()).toBe("0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f2021");
+  });
+
+  it("loads key directly from string if PEM block is provided in config", () => {
+    const originalPath = config.oracleKeyPath;
+    (config as any).oracleKeyPath = "-----BEGIN PRIVATE KEY-----\nMOCK\n-----END PRIVATE KEY-----";
+    try {
+      const key = loadSignerKey();
+      expect(key).toBeDefined();
+    } finally {
+      (config as any).oracleKeyPath = originalPath;
+    }
   });
 });
