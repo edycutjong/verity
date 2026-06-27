@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.0](../../compare/v1.4.0...v1.5.0) (2026-06-27)
+
+### 🚀 Features
+
+- **docs:** update pitch video link to actual YouTube URL (93de4d2)
+
 ## [1.4.0](../../compare/v1.3.1...v1.4.0) (2026-06-27)
 
 ### 🚀 Features
