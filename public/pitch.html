@@ -194,28 +194,44 @@
     </div>
 
     <!-- Slide 6: Demo -->
-    <div class="slide max-w-5xl w-full flex-col text-left gap-6">
-      <span class="text-xs font-mono tracking-widest accent uppercase mb-2">Slide 06 // Live Demo</span>
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-6">What Judges Must See</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl">
-        <div class="glass rounded-xl p-5 glow">
-          <div class="text-lg font-bold accent mb-2 flex items-center gap-2">
-            <img src="/icon.svg" class="w-5 h-5 object-contain" alt="Verity Icon" />
-            Oracle Terminal
+    <div class="slide max-w-6xl w-full flex-col lg:flex-row items-stretch gap-8">
+      <div class="flex-1 flex flex-col justify-center">
+        <span class="text-xs font-mono tracking-widest accent uppercase mb-2">Slide 06 // Live Demo</span>
+        <h2 class="text-3xl font-bold tracking-tight mb-4">Pitch & Walkthrough</h2>
+        <div class="relative w-full aspect-video rounded-xl overflow-hidden glass border border-slate-800 shadow-2xl">
+          <iframe 
+            class="absolute inset-0 w-full h-full" 
+            src="https://www.youtube.com/embed/ZHmBlNZ2Eeo" 
+            title="Verity Demo Video" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+      
+      <div class="flex-1 flex flex-col justify-center gap-4">
+        <h3 class="text-lg font-semibold text-slate-300">What Judges Must See</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="glass rounded-xl p-4 glow">
+            <div class="text-sm font-bold accent mb-1 flex items-center gap-2">
+              <img src="/icon.svg" class="w-4 h-4 object-contain" alt="Verity Icon" />
+              Oracle Terminal
+            </div>
+            <p class="text-[11px] text-slate-400 leading-normal">Click "GET /value" → 402 challenge → EIP-712 pay → 200 response. A real x402 round-trip.</p>
           </div>
-          <p class="text-xs text-slate-400">Click "Query" → 402 challenge → EIP-712 auth → 200 response with value + reputation. A real x402 round-trip.</p>
-        </div>
-        <div class="glass rounded-xl p-5">
-          <div class="text-lg font-bold text-red-400 mb-2">📉 The Engineered Miss</div>
-          <p class="text-xs text-slate-400">At t2: all sources agree ~1950, but truth is 2040. Watch the reputation score drop in real-time.</p>
-        </div>
-        <div class="glass rounded-xl p-5">
-          <div class="text-lg font-bold text-amber-400 mb-2">📊 Reputation Curve</div>
-          <p class="text-xs text-slate-400">Interactive chart showing score over time — the visible dip at t2 proves accountability.</p>
-        </div>
-        <div class="glass rounded-xl p-5">
-          <div class="text-lg font-bold text-cyan-400 mb-2">💰 Consumer LTV</div>
-          <p class="text-xs text-slate-400">Dynamic pricing panel showing how query cost tracks reputation — market discipline in action.</p>
+          <div class="glass rounded-xl p-4">
+            <div class="text-sm font-bold text-red-400 mb-1">📉 The Engineered Miss</div>
+            <p class="text-[11px] text-slate-400 leading-normal">At t2: posted value 1950 vs truth 2040 (4.41% error). Watch the reputation score drop in real-time.</p>
+          </div>
+          <div class="glass rounded-xl p-4">
+            <div class="text-sm font-bold text-amber-400 mb-1">📊 Reputation Curve</div>
+            <p class="text-[11px] text-slate-400 leading-normal">Interactive chart showing score over time — the visible dip at t2 proves accountability.</p>
+          </div>
+          <div class="glass rounded-xl p-4">
+            <div class="text-sm font-bold text-cyan-400 mb-1">💰 Consumer LTV</div>
+            <p class="text-[11px] text-slate-400 leading-normal">Dynamic pricing panel showing how query cost tracks reputation — market discipline in action.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -318,6 +334,7 @@
       </div>
       <div class="flex items-center gap-4 mt-6">
         <a href="https://verity.edycu.dev" target="_blank" class="px-5 py-2.5 rounded-lg border border-green-500/30 bg-green-500/10 text-green-400 font-semibold text-xs hover:bg-green-500/20 hover:border-green-400 hover:shadow-[0_0_15px_rgba(34,197,94,0.15)] transition-all duration-300">Live Website</a>
+        <a href="https://youtu.be/ZHmBlNZ2Eeo" target="_blank" class="px-5 py-2.5 rounded-lg border border-red-500/30 bg-red-500/10 text-red-400 font-semibold text-xs hover:bg-red-500/20 hover:border-red-400 hover:shadow-[0_0_15px_rgba(239,68,68,0.15)] transition-all duration-300">Pitch Video (YouTube)</a>
         <a href="https://github.com/edycutjong/verity" target="_blank" class="px-5 py-2.5 rounded-lg border border-slate-800 bg-slate-900/40 text-slate-300 font-semibold text-xs hover:bg-slate-900/60 hover:border-slate-700 hover:shadow-[0_0_15px_rgba(148,163,184,0.05)] transition-all duration-300">Codebase (GitHub)</a>
       </div>
     </div>
