@@ -201,12 +201,7 @@ mod tests {
     fn setup() -> (odra::host::HostEnv, VerityHostRef) {
         let env = odra_test::env();
         let admin = env.get_account(0);
-        let contract = Verity::deploy(
-            &env,
-            VerityInitArgs {
-                admin,
-            },
-        );
+        let contract = Verity::deploy(&env, VerityInitArgs { admin });
         (env, contract)
     }
 
@@ -237,7 +232,7 @@ mod tests {
         // Settle with relative error = 0 (perfect prediction)
         c.settle(post_id, value);
         assert_eq!(c.settle_count(), 1);
-        
+
         // EWMA update: accuracy = 10000 (100%)
         // new_score = (3000 * 10000 + 7000 * 7500) / 10000 = (30000000 + 52500000) / 10000 = 8250
         assert_eq!(c.get_reputation(), 8250);
@@ -256,7 +251,7 @@ mod tests {
         let (env, mut c) = setup();
         // admin posts first
         let post_id = c.post_value("BTC".to_string(), 10000, 9500, "hash".to_string());
-        
+
         env.set_caller(env.get_account(1));
         let res = c.try_settle(post_id, 10000);
         assert_eq!(res, Err(Error::NotAdmin.into()));
@@ -282,11 +277,11 @@ mod tests {
     fn settle_with_large_error_drops_reputation() {
         let (_env, mut c) = setup();
         let post_id = c.post_value("BTC".to_string(), 10000, 9500, "hash".to_string());
-        
+
         // Settle with relative error >= 2% (200 bps threshold)
         // Let's use 10300 (3% error)
         c.settle(post_id, 10300);
-        
+
         // accuracy = 0
         // new_score = (3000 * 0 + 7000 * 7500) / 10000 = 5250
         assert_eq!(c.get_reputation(), 5250);
@@ -296,11 +291,11 @@ mod tests {
     fn settle_with_partial_accuracy() {
         let (_env, mut c) = setup();
         let post_id = c.post_value("BTC".to_string(), 10000, 9500, "hash".to_string());
-        
+
         // Settle with 1% error (100 bps relative error)
         // 10100 ground truth
         c.settle(post_id, 10100);
-        
+
         // relative_error_bps = (100 * 10000) / 10100 = 99 bps
         // accuracy_bps = 10000 - (99 * 10000 / 200) = 10000 - 4950 = 5050 bps
         // new_score = (3000 * 5050 + 7000 * 7500) / 10000 = (15150000 + 52500000) / 10000 = 6765
@@ -311,10 +306,10 @@ mod tests {
     fn settle_posted_lower_than_ground_truth() {
         let (_env, mut c) = setup();
         let post_id = c.post_value("BTC".to_string(), 9900, 9500, "hash".to_string());
-        
+
         // Settle with 10000 (posted is lower than ground truth)
         c.settle(post_id, 10000);
-        
+
         // relative_error_bps = (100 * 10000) / 10000 = 100 bps
         // accuracy_bps = 10000 - (100 * 10000 / 200) = 5000 bps
         // new_score = (3000 * 5000 + 7000 * 7500) / 10000 = (15000000 + 52500000) / 10000 = 6750
@@ -325,10 +320,10 @@ mod tests {
     fn settle_edge_cases_zero_ground_truth() {
         let (_env, mut c) = setup();
         let post_id = c.post_value("BTC".to_string(), 100, 9500, "hash".to_string());
-        
+
         // Settle with ground truth = 0
         c.settle(post_id, 0);
-        
+
         // ground_truth_bps == 0, error = 100 > 0 -> relative_error = 10000 bps
         // accuracy_bps = 0
         // new_score = 5250
@@ -339,10 +334,10 @@ mod tests {
     fn settle_edge_cases_zero_error_zero_ground_truth() {
         let (_env, mut c) = setup();
         let post_id = c.post_value("BTC".to_string(), 1, 9500, "hash".to_string());
-        
+
         // Settle with ground truth = 1, posted = 1
         c.settle(post_id, 1);
-        
+
         // ground_truth_bps == 1, error = 0 -> relative_error = 0 bps
         // accuracy_bps = 10000
         // new_score = 8250
