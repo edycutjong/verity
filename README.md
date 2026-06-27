@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="docs/icon.svg" alt="Verity Logo" width="120">
+  <img src="docs/icon.svg" alt="Verity Logo" width="144">
   <h1>Verity 🎯</h1>
   <p><em>RWA oracles that bleed when they're wrong.</em></p>
   <img src="docs/readme-hero-animated.svg" alt="Verity Hero" width="100%">
