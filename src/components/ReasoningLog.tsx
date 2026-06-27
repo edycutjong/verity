@@ -24,7 +24,15 @@ export function ReasoningLog({ timeline }: { timeline: TimelineEntry[] }) {
             <p className="mt-2 text-xs leading-relaxed text-slate-400">{entry.rationale}</p>
             {entry.flaggedSources.length > 0 && (
               <p className="mt-1 text-xs text-amber-400">
-                ⚠ Flagged: {entry.flaggedSources.join(", ")}
+                ⚠ Flagged:{" "}
+                {entry.flaggedSources
+                  .map((id) => {
+                    if (id === "source_a") return "Bloomberg";
+                    if (id === "source_b") return "Reuters";
+                    if (id === "source_c") return "Binance";
+                    return id;
+                  })
+                  .join(", ")}
               </p>
             )}
           </div>

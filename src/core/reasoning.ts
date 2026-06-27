@@ -96,7 +96,15 @@ export function reasonOverSources(readings: SourceReading[]): AgentDecision {
     const outlierDetails = outliers
       .map((id) => {
         const r = readings.find((s) => s.sourceId === id);
-        return r ? `${id} (${r.value})` : id;
+        const mappedName =
+          id === "source_a"
+            ? "Bloomberg"
+            : id === "source_b"
+              ? "Reuters"
+              : id === "source_c"
+                ? "Binance"
+                : id;
+        return r ? `${mappedName} (${r.value})` : mappedName;
       })
       .join(", ");
     rationale = `Detected ${outliers.length} outlier source(s): ${outlierDetails}. ` +
