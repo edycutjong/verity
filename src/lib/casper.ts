@@ -30,7 +30,12 @@ export function keyAlgorithm(): KeyAlgorithm {
 }
 
 export function loadSignerKey(): PrivateKey {
-  const pem = readFileSync(config.oracleKeyPath, "utf8");
+  let pem: string;
+  if (config.oracleKeyPath.includes("-----BEGIN")) {
+    pem = config.oracleKeyPath.replace(/\\n/g, "\n");
+  } else {
+    pem = readFileSync(config.oracleKeyPath, "utf8");
+  }
   return PrivateKey.fromPem(pem, keyAlgorithm());
 }
 
