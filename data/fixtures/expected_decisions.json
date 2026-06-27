@@ -1,0 +1,20 @@
+[
+  {
+    "step": "t0",
+    "expectedAction": "post",
+    "expectedFlagged": [],
+    "description": "All 3 sources agree (~2000). High consensus → post with high confidence."
+  },
+  {
+    "step": "t1",
+    "expectedAction": "post",
+    "expectedFlagged": ["source_c"],
+    "description": "Source C spiked to 2600 (manipulation). Agent detects outlier, down-weights C, posts ~2010 from clean sources."
+  },
+  {
+    "step": "t2",
+    "expectedAction": "post",
+    "expectedFlagged": [],
+    "description": "All 3 sources agree (~1950). Agent posts 1950 — but ground truth will be 2040 (the engineered miss)."
+  }
+]

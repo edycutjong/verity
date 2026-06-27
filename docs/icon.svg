@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512"
+     role="img" aria-labelledby="t d" onclick="togglePause()" style="cursor:pointer">
+  <title id="t">Verity</title>
+  <desc id="d">Truth oracle — multi-source data streams converge into a faceted verified gem-core, a reputation arc sweeps the perimeter, and a red slash ripples outward whenever an oracle bleeds for being wrong. Click to pause.</desc>
+  <script><![CDATA[
+    var paused=false;
+    function togglePause(){var s=document.querySelector('svg');if(paused){s.unpauseAnimations();paused=false;}else{s.pauseAnimations();paused=true;}}
+  ]]></script>
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="44%" r="78%">
+      <stop offset="0%" stop-color="#041f2e"/>
+      <stop offset="60%" stop-color="#030d17"/>
+      <stop offset="100%" stop-color="#020617"/>
+      <animate attributeName="cx" values="50%;56%;44%;50%" dur="10s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="44%;52%;38%;44%" dur="10s" repeatCount="indefinite"/>
+    </radialGradient>
+    <radialGradient id="gem" cx="50%" cy="38%" r="65%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="40%" stop-color="#67E8F9"/>
+      <stop offset="100%" stop-color="#06B6D4"/>
+    </radialGradient>
+    <linearGradient id="streamLive" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06B6D4">
+        <animate attributeName="stop-color" values="#06B6D4;#22d3ee;#06B6D4" dur="5s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="#22d3ee">
+        <animate attributeName="stop-color" values="#22d3ee;#06B6D4;#22d3ee" dur="5s" repeatCount="indefinite"/>
+      </stop>
+    </linearGradient>
+    <filter id="neon" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="6" result="b1"/>
+      <feGaussianBlur stdDeviation="18" result="b2"/>
+      <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M24 0H0V24" fill="none" stroke="#ffffff" stroke-opacity="0.03" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <rect width="512" height="512" rx="112" fill="url(#grid)" opacity="0.85"/>
+
+  <!-- Sweeping cyber scanline -->
+  <line x1="0" y1="-10" x2="512" y2="-10" stroke="#06B6D4" stroke-width="1.8" opacity="0.12" filter="url(#neon)">
+    <animate attributeName="y1" values="-10;522;-10" dur="6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"/>
+    <animate attributeName="y2" values="-10;522;-10" dur="6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"/>
+  </line>
+
+  <!-- Diagnostic Alarm Card Flash (flashes when oracle bleeds) -->
+  <rect width="512" height="512" rx="112" fill="none" stroke="#EF4444" stroke-width="8" opacity="0">
+    <animate attributeName="opacity" values="0;0;1;0.4;0;0" dur="5s" keyTimes="0;0.62;0.64;0.74;0.86;1" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- Ambient glow -->
+  <ellipse cx="256" cy="256" rx="150" ry="150" fill="#06B6D4" filter="url(#soft)" opacity="0.16">
+    <animate attributeName="opacity" values="0.09;0.22;0.09" dur="4s" repeatCount="indefinite"
+      calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+  </ellipse>
+
+  <!-- Converging source streams (data flowing inward) -->
+  <g stroke="url(#streamLive)" stroke-width="6" stroke-linecap="round" stroke-dasharray="10 96">
+    <line x1="256" y1="93" x2="256" y2="186"><animate attributeName="stroke-dashoffset" values="106;0" dur="1.6s" begin="0s" repeatCount="indefinite"/></line>
+    <line x1="399" y1="173" x2="312" y2="226"><animate attributeName="stroke-dashoffset" values="106;0" dur="1.6s" begin="0.27s" repeatCount="indefinite"/></line>
+    <line x1="399" y1="339" x2="312" y2="286"><animate attributeName="stroke-dashoffset" values="106;0" dur="1.6s" begin="0.53s" repeatCount="indefinite"/></line>
+    <line x1="256" y1="419" x2="256" y2="326"><animate attributeName="stroke-dashoffset" values="106;0" dur="1.6s" begin="0.8s" repeatCount="indefinite"/></line>
+    <line x1="113" y1="339" x2="200" y2="286"><animate attributeName="stroke-dashoffset" values="106;0" dur="1.6s" begin="1.07s" repeatCount="indefinite"/></line>
+    <line x1="113" y1="173" x2="200" y2="226"><animate attributeName="stroke-dashoffset" values="106;0" dur="1.6s" begin="1.33s" repeatCount="indefinite"/></line>
+  </g>
+
+  <!-- Flowing packet details (visualizing real-time data packets) -->
+  <g fill="#ffffff" filter="url(#neon)">
+    <circle cx="256" cy="93" r="5" opacity="0">
+      <animate attributeName="cy" values="93;186" dur="1.6s" begin="0s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.2;0.8;1" dur="1.6s" begin="0s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="399" cy="173" r="5" opacity="0">
+      <animate attributeName="cx" values="399;312" dur="1.6s" begin="0.27s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="173;226" dur="1.6s" begin="0.27s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.2;0.8;1" dur="1.6s" begin="0.27s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="399" cy="339" r="5" opacity="0">
+      <animate attributeName="cx" values="399;312" dur="1.6s" begin="0.53s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="339;286" dur="1.6s" begin="0.53s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.2;0.8;1" dur="1.6s" begin="0.53s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="256" cy="419" r="5" opacity="0">
+      <animate attributeName="cy" values="419;326" dur="1.6s" begin="0.8s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.2;0.8;1" dur="1.6s" begin="0.8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="113" cy="339" r="5" opacity="0">
+      <animate attributeName="cx" values="113;200" dur="1.6s" begin="1.07s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="339;286" dur="1.6s" begin="1.07s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.2;0.8;1" dur="1.6s" begin="1.07s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="113" cy="173" r="5" opacity="0">
+      <animate attributeName="cx" values="113;200" dur="1.6s" begin="1.33s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="173;226" dur="1.6s" begin="1.33s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.2;0.8;1" dur="1.6s" begin="1.33s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Source nodes (twinkling) -->
+  <g fill="#22d3ee" filter="url(#neon)">
+    <circle cx="256" cy="91" r="10"><animate attributeName="opacity" values="0.5;1;0.5" dur="2s" begin="0s" repeatCount="indefinite"/></circle>
+    <circle cx="399" cy="173" r="10"><animate attributeName="opacity" values="0.5;1;0.5" dur="2s" begin="0.3s" repeatCount="indefinite"/></circle>
+    <circle cx="399" cy="339" r="10"><animate attributeName="opacity" values="0.5;1;0.5" dur="2s" begin="0.6s" repeatCount="indefinite"/></circle>
+    <circle cx="256" cy="421" r="10"><animate attributeName="opacity" values="0.5;1;0.5" dur="2s" begin="0.9s" repeatCount="indefinite"/></circle>
+    <circle cx="113" cy="339" r="10"><animate attributeName="opacity" values="0.5;1;0.5" dur="2s" begin="1.2s" repeatCount="indefinite"/></circle>
+    <circle cx="113" cy="173" r="10"><animate attributeName="opacity" values="0.5;1;0.5" dur="2s" begin="1.5s" repeatCount="indefinite"/></circle>
+  </g>
+
+  <!-- Reputation arc (EWMA) — faint full ring + bright rotating segment -->
+  <circle cx="256" cy="256" r="128" fill="none" stroke="#0e7490" stroke-width="3" opacity="0.35"/>
+  <g transform="translate(256,256)">
+    <g>
+      <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="9s" repeatCount="indefinite"/>
+      <circle cx="0" cy="0" r="128" fill="none" stroke="#22d3ee" stroke-width="5" stroke-linecap="round"
+        stroke-dasharray="180 624" opacity="0.85" filter="url(#neon)"/>
+    </g>
+  </g>
+
+  <!-- Verified gem core -->
+  <g filter="url(#neon)">
+    <g transform="translate(256,256)">
+      <g>
+        <!-- scale pulse -->
+        <animateTransform attributeName="transform" type="scale" values="1;1.08;1" dur="2.2s" repeatCount="indefinite"
+          calcMode="spline" keyTimes="0;0.5;1" keySplines="0.34 1.56 0.64 1;0.4 0 0.6 1"/>
+        <!-- shudder horizontal jitter -->
+        <g>
+          <animateTransform attributeName="transform" type="translate" values="0,0; 0,0; -7,2; 7,-2; -4,1; 4,-1; 0,0; 0,0" keyTimes="0;0.62;0.64;0.66;0.68;0.70;0.72;1" dur="5s" repeatCount="indefinite"/>
+          
+          <polygon points="0,-62 62,-6 0,64 -62,-6" fill="url(#gem)"/>
+
+          <!-- Red flash layered on top during shudder -->
+          <polygon points="0,-62 62,-6 0,64 -62,-6" fill="#EF4444" opacity="0">
+            <animate attributeName="opacity" values="0;0;0.9;0.9;0;0" dur="5s" keyTimes="0;0.62;0.64;0.72;0.86;1" repeatCount="indefinite"/>
+          </polygon>
+
+          <!-- facets -->
+          <g stroke="#ffffff" stroke-width="2" opacity="0.55" fill="none" stroke-linejoin="round">
+            <polyline points="-62,-6 0,-28 62,-6"/>
+            <line x1="0" y1="-62" x2="0" y2="-28"/>
+            <line x1="0" y1="-28" x2="0" y2="64"/>
+            <line x1="-62" y1="-6" x2="0" y2="64"/>
+            <line x1="62" y1="-6" x2="0" y2="64"/>
+          </g>
+          <polygon points="0,-62 34,-28 -34,-28" fill="#ffffff" opacity="0.5"/>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- "Bleeds when wrong" — occasional red slash ripple -->
+  <circle cx="256" cy="256" r="70" fill="none" stroke="#EF4444" stroke-width="6" filter="url(#neon)" opacity="0">
+    <animate attributeName="r" values="60;60;160;160;160" keyTimes="0;0.62;0.92;0.96;1" dur="5s" repeatCount="indefinite"
+      calcMode="spline" keySplines="0.4 0 0.2 1; 0.2 0.8 0.3 1; 0.2 0.8 0.3 1; 0.2 0.8 0.3 1"/>
+    <animate attributeName="opacity" values="0;0;0.95;0;0" dur="5s" keyTimes="0;0.62;0.64;0.92;1" repeatCount="indefinite"/>
+  </circle>
+</svg>
