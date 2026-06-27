@@ -1,0 +1,77 @@
+{
+  "name": "verity",
+  "version": "1.0.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edycutjong/verity.git"
+  },
+  "bugs": {
+    "url": "https://github.com/edycutjong/verity/issues"
+  },
+  "homepage": "https://github.com/edycutjong/verity#readme",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "audit": "pnpm audit --audit-level=high",
+    "ci": "pnpm run audit || true && pnpm run lint && pnpm run typecheck && pnpm run test:coverage",
+    "ci:full": "pnpm run ci && pnpm run build && pnpm run e2e",
+    "seed": "tsx scripts/seed.ts",
+    "settle": "tsx scripts/settle.ts",
+    "x402:roundtrip": "tsx scripts/x402_roundtrip.ts",
+    "x402:check": "tsx scripts/x402_roundtrip.ts",
+    "verify:reputation": "tsx scripts/verify_reputation.ts",
+    "bench": "tsx scripts/bench.ts",
+    "check:submission": "tsx scripts/check_submission_readiness.ts",
+    "contract:build": "cd contract && cargo odra build",
+    "contract:deploy": "cd contract && cargo run --bin verity_livenet --features livenet",
+    "deploy:rpc": "tsx scripts/deploy_rpc.ts",
+    "contract:test": "cd contract && cargo test",
+    "e2e": "npx playwright test",
+    "e2e:ui": "npx playwright test --ui",
+    "lighthouse": "npx lhci autorun"
+  },
+  "dependencies": {
+    "casper-js-sdk": "^5.0.12",
+    "ethers": "^6",
+    "next": "16.2.9",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.5",
+    "@lhci/cli": "^0.14.0",
+    "@playwright/test": "^1.52.0",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitest/coverage-v8": "^4.1.8",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.9",
+    "tailwindcss": "^4",
+    "tsx": "^4.22.4",
+    "typescript": "^5",
+    "vitest": "^4.1.8"
+  },
+  "pnpm": {
+    "overrides": {
+      "tmp": "^0.2.6",
+      "js-yaml": "^4.2.0",
+      "cookie": "^0.7.0",
+      "esbuild": "^0.28.1",
+      "postcss": "^8.5.10",
+      "uuid": "^11.1.1",
+      "ws": "^8.21.0"
+    },
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}

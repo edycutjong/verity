@@ -1,0 +1,14 @@
+[
+  {
+    "step": "t0",
+    "expectedScore": 0.8025
+  },
+  {
+    "step": "t1",
+    "expectedScore": 0.8318
+  },
+  {
+    "step": "t2",
+    "expectedScore": 0.5823
+  }
+]

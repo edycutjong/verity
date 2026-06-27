@@ -1,0 +1,17 @@
+[
+  {
+    "step": "t0",
+    "trueValue": 2003,
+    "arrivedAt": "2026-06-11T10:30:00Z"
+  },
+  {
+    "step": "t1",
+    "trueValue": 2005,
+    "arrivedAt": "2026-06-11T11:30:00Z"
+  },
+  {
+    "step": "t2",
+    "trueValue": 2040,
+    "arrivedAt": "2026-06-11T12:30:00Z"
+  }
+]
