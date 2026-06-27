@@ -27,11 +27,42 @@
 
 ## 📸 See it in Action
 
+> **Autonomous RWA oracle agent that reasons over conflicting evidence, whose on-chain reputation rises and falls with its accuracy, and whose data you pay for per query via Casper x402. Part of the Vouch suite.**
+
+### 1. Reputation & Value Dashboard
 <div align="center">
-  <img src="public/og-image.png" alt="Verity Demo" width="100%">
+  <img src="docs/screenshots/01-initial-dashboard.png" alt="Verity Dashboard" width="100%">
 </div>
 
-> **Autonomous RWA oracle agent that reasons over conflicting evidence, whose on-chain reputation rises and falls with its accuracy, and whose data you pay for per query via Casper x402. Part of the Vouch suite.**
+*The main Verity interface tracking real-world asset listings (Gold, Silver, Copper) alongside the oracle agent's live on-chain EWMA reputation score.*
+
+### 2. Multi-Source AI Reasoning Logs
+<div align="center">
+  <img src="docs/screenshots/02-oracle-reasoning-console.png" alt="AI Oracle Reasoning Logs" width="100%">
+</div>
+
+*The reasoning console showing how the oracle agent ingests and compares data from multiple feeds (Bloomberg, Reuters, Binance), detects anomalies, and reconciles them before posting.*
+
+### 3. Pay-to-Read Oracle Terminal (x402 Micropayments)
+<div align="center">
+  <img src="docs/screenshots/03-oracle-terminal-idle.png" alt="Oracle Terminal Idle" width="100%">
+</div>
+
+*The consumer-facing Oracle Terminal, where protocols can query the oracle feed.*
+
+### 4. Casper x402 Payment Challenge
+<div align="center">
+  <img src="docs/screenshots/04-oracle-terminal-challenged.png" alt="Casper x402 Challenge" width="100%">
+</div>
+
+*Querying the endpoint triggers a 402 Payment Required challenge, requiring the requester to pay a dynamically-scaled fee proportional to the oracle's reputation.*
+
+### 5. Decrypted Value Egress
+<div align="center">
+  <img src="docs/screenshots/05-oracle-terminal-paid.png" alt="Unlocked Oracle Feed" width="100%">
+</div>
+
+*Upon signing and settling the EIP-712 payment authorization, the facilitator approves the request, returning the decrypted asset values.*
 
 ---
 
@@ -111,10 +142,13 @@ flowchart TD
 |---|---|
 | **Verity Contract** | [`hash-657a83911a36b3aa2204e47f39c237f15b2ed6f54cbaf6f83b0be7f1d7873c82`](https://testnet.cspr.live/contract-package/657a83911a36b3aa2204e47f39c237f15b2ed6f54cbaf6f83b0be7f1d7873c82) |
 | **Install Transaction** | [`66b6f13ab163abf5265c4007d7438ee178bdbea682adab1c394a6f043765dcc1`](https://testnet.cspr.live/transaction/66b6f13ab163abf5265c4007d7438ee178bdbea682adab1c394a6f043765dcc1) |
+| **`post_value` (oracle posts a value)** | [`fc10730db99724ee78bb8c55657fa29054268a61e4fb96b1e794e649cda66e0b`](https://testnet.cspr.live/transaction/fc10730db99724ee78bb8c55657fa29054268a61e4fb96b1e794e649cda66e0b) |
+| **`settle` (EWMA reputation drops 83.2→58.2 on a MISS)** | [`ce35dd60774149baa8564e5adc0adbedd1ec624157103666e2615beaa615be21`](https://testnet.cspr.live/transaction/ce35dd60774149baa8564e5adc0adbedd1ec624157103666e2615beaa615be21) |
 | **CEP-18 Token (x402)** | [`hash-541069ed8cad06249f76edb0972932d012badbb256111d3000df06ac1d703be6`](https://testnet.cspr.live/contract-package/541069ed8cad06249f76edb0972932d012badbb256111d3000df06ac1d703be6) |
 | **Oracle Account** | [`016bfd43f7d73c988702e0b1e8657687282bc578b60e9eaaabb1f3aa95ff9a7338`](https://testnet.cspr.live/account/016bfd43f7d73c988702e0b1e8657687282bc578b60e9eaaabb1f3aa95ff9a7338) |
 | **Network** | Casper Testnet (`casper-test`) |
 | **Framework** | Odra (Rust → WASM, `target-cpu=mvp`) |
+| **Machine-readable record** | [`deployments/testnet.json`](deployments/testnet.json) |
 
 > **Re-deploy your own:** `npm run deploy:rpc` installs a fresh contract instance and prints the package hash. See [LIVE_TESTNET.md](LIVE_TESTNET.md) for the full walkthrough.
 

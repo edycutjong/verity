@@ -67,9 +67,11 @@ async function callContract(entryPoint: string, args: Args, paymentMotes = DEFAU
     throw new Error("VERITY_CONTRACT_HASH not set — deploy the reputation registry first (see LIVE_TESTNET.md).");
   }
   const key = loadSignerKey();
+  // Odra deploys a contract PACKAGE; calls must target the package (latest version),
+  // not an addressable-entity hash — byHash(package) is rejected as an invalid transaction.
   const tx = new ContractCallBuilder()
     .from(key.publicKey)
-    .byHash(bareHash(config.contractHash))
+    .byPackageHash(bareHash(config.contractHash))
     .entryPoint(entryPoint)
     .runtimeArgs(args)
     .chainName(config.chainName)

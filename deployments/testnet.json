@@ -1,0 +1,31 @@
+{
+  "network": "casper-test",
+  "contractPackageHash": "hash-657a83911a36b3aa2204e47f39c237f15b2ed6f54cbaf6f83b0be7f1d7873c82",
+  "cep18TokenPackageHash": "hash-541069ed8cad06249f76edb0972932d012badbb256111d3000df06ac1d703be6",
+  "oracleAccount": "016bfd43f7d73c988702e0b1e8657687282bc578b60e9eaaabb1f3aa95ff9a7338",
+  "deployedAt": "2026-06-24",
+  "transactions": {
+    "install": "66b6f13ab163abf5265c4007d7438ee178bdbea682adab1c394a6f043765dcc1",
+    "post_value": "fc10730db99724ee78bb8c55657fa29054268a61e4fb96b1e794e649cda66e0b",
+    "settle": "ce35dd60774149baa8564e5adc0adbedd1ec624157103666e2615beaa615be21"
+  },
+  "additionalConfirmed": {
+    "post_value": [
+      "fc10730db99724ee78bb8c55657fa29054268a61e4fb96b1e794e649cda66e0b",
+      "accb00995bdb9dd65eb1cb54fad00df69310580d19c120f6cd3c09832c404c76",
+      "4e4ae856c47f26d3453adc6cc1aac1e258ad28e37eebf2c67193653d5e3c4a9a"
+    ],
+    "settle": [
+      "7c024ae484ebda1c81d0ae1be51883718cfce73518402373a42e13a4ace30810",
+      "ce35dd60774149baa8564e5adc0adbedd1ec624157103666e2615beaa615be21"
+    ]
+  },
+  "explorerBase": "https://testnet.cspr.live/transaction/",
+  "notes": [
+    "Installed via the Odra livenet backend (cargo odra build → wasm/Verity.wasm, lowered to MVP).",
+    "Contract calls target the contract PACKAGE (byPackageHash) — byHash on a package hash is rejected as an Invalid transaction (-32016).",
+    "Oracle lifecycle (post_value → settle) broadcast + confirmed on-chain via scripts/settle.ts with VERITY_DEMO=false.",
+    "The featured settle (ce35dd60…) is the MISS that dropped the EWMA reputation 83.2 → 58.2 — accuracy as on-chain collateral.",
+    "post_value(asset, value_bps:u32, confidence_bps:u32, rationale_hash) and settle(post_id:u32, ground_truth_bps:u32) verified against contract/src/verity.rs."
+  ]
+}

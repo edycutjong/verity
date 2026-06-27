@@ -13,6 +13,7 @@ vi.mock("casper-js-sdk", () => {
   class MockContractCallBuilder {
     from = vi.fn().mockReturnThis();
     byHash = vi.fn().mockReturnThis();
+    byPackageHash = vi.fn().mockReturnThis();
     entryPoint = vi.fn().mockReturnThis();
     runtimeArgs = vi.fn().mockReturnThis();
     chainName = vi.fn().mockReturnThis();
