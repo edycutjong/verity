@@ -27,7 +27,7 @@
 
 ## 📸 See it in Action
 
-> **Autonomous RWA oracle agent that reasons over conflicting evidence, whose on-chain reputation rises and falls with its accuracy, and whose data you pay for per query via Casper x402. Part of the Vouch suite.**
+> **Autonomous RWA oracle agent that reasons over conflicting evidence, whose on-chain reputation rises and falls with its accuracy, and whose data you pay for per query via Casper x402. One of three coordinated Casper agent-trust projects.**
 
 ### 1. Reputation & Value Dashboard
 <div align="center">
