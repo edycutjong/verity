@@ -10,6 +10,7 @@
   [![Pitch Deck](https://img.shields.io/badge/📊_Pitch-Deck-f59e0b?style=for-the-badge)](https://verity.edycu.dev/pitch.html)
   [![Pitch Video](https://img.shields.io/badge/🎬_Pitch-Video-ef4444?style=for-the-badge)](https://youtu.be/ZHmBlNZ2Eeo)
   [![Built for Casper](https://img.shields.io/badge/DoraHacks-Casper_Agentic_Buildathon-8b5cf6?style=for-the-badge)](https://dorahacks.io/hackathon/casper-agentic-buildathon)
+  [![Follow on X](https://img.shields.io/badge/Follow-%40VouchOnCasper-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/VouchOnCasper)
 
   <br/>
   
