@@ -65,10 +65,6 @@ interface CacheEntry {
 }
 let cache: CacheEntry | null = null;
 
-function digestOf(snapshot: OracleSnapshot): string {
-  return createHash("sha256").update(JSON.stringify(snapshot.timeline)).digest("hex");
-}
-
 /**
  * Analyze the snapshot with a real Claude call (cached per snapshot digest).
  * Returns `null` when no ANTHROPIC_API_KEY is configured or the call fails —
@@ -77,9 +73,9 @@ function digestOf(snapshot: OracleSnapshot): string {
 export async function analyzeSnapshot(snapshot: OracleSnapshot): Promise<OracleAnalysis | null> {
   if (!llmConfigured()) return null;
 
-  const digest = digestOf(snapshot);
-  if (cache?.digest === digest) return cache.analysis;
-
+  // The projection sent to the model deliberately excludes volatile fields
+  // (deployHash embeds a timestamp) — so it doubles as the cache key: identical
+  // analytic content → one Claude call.
   const timeline = snapshot.timeline.map((t) => ({
     step: t.step,
     action: t.action,
@@ -92,6 +88,9 @@ export async function analyzeSnapshot(snapshot: OracleSnapshot): Promise<OracleA
     flaggedSources: t.flaggedSources,
     deterministicRationale: t.rationale,
   }));
+
+  const digest = createHash("sha256").update(JSON.stringify(timeline)).digest("hex");
+  if (cache?.digest === digest) return cache.analysis;
 
   try {
     const out = await structuredCall<Omit<OracleAnalysis, "model">>({
