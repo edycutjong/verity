@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.0](../../compare/v1.7.0...v2.0.0) (2026-07-18)
+
+### ⚠️ BREAKING CHANGES
+
+- Vouch 2.0 — Casper Buildathon Finals release (524db3f)
+
+### 🚀 Features
+
+- Vouch 2.0 — Casper Buildathon Finals release (524db3f)
+- **ui:** Claude Analyst panel on the dashboard — live LLM review with disclosed keyless fallback (7b90b27)
+
+### 📝 Documentation
+
+- **pitch:** wire live @VouchOnCasper socials into launch plan + closing slide (767bec7)
+
 ## [1.7.0](../../compare/v1.6.1...v1.7.0) (2026-07-18)
 
 ### 🚀 Features
