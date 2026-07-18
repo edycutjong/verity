@@ -85,7 +85,8 @@ Standard oracles face no real penalty for delivering bad data; their trust assum
 | **Contract** | Odra (Rust) on Casper Testnet |
 | **Reputation** | EWMA-based on-chain scoring (α = 0.3, max 2% miss threshold) |
 | **Micropayments** | x402 (CSPR.cloud facilitator) |
-| **Signing** | CSPR.click AI Agent Skill |
+| **Signing** | casper-js-sdk (PEM key, TransactionV1) |
+| **AI Analyst** | Claude Haiku 4.5 ([core/llm.ts](src/core/llm.ts)) — real Anthropic call that narrates + risk-flags the settled timeline; numbers stay deterministic; keyless fallback |
 | **Testing** | Vitest |
 
 ### System Data Flow
@@ -95,7 +96,7 @@ flowchart TD
     SRC[Multiple off-chain RWA sources] --> AG[Oracle Reasoning Agent: reconcile / detect manipulation / decide post-or-abstain]
     AG -->|value + confidence + rationale| VAL[Posted value]
     AG -. abstains when sources diverge .-> SKIP[No post]
-    VAL -->|CSPR.click TransactionV1| REG[Odra Reputation Registry]
+    VAL -->|casper-js-sdk TransactionV1| REG[Odra Reputation Registry]
     REG --> TN[(Casper Testnet)]
     GT[Ground-truth feed] --> SET[Accuracy Settlement Job]
     SET -->|rescore| REG
@@ -116,7 +117,8 @@ flowchart TD
 *   **Casper Innovation Track (Build Direction #3: AI-Powered Oracle Networks)**
     *   **Casper Testnet Smart Contract:** Built with the Odra framework in Rust, located in [verity.rs](contract/src/verity.rs). Tracks oracle reputation records on-chain and processes settlements.
     *   **Casper x402 Micropayments:** Integrated in [x402.ts](src/core/x402.ts) to verify query payment tokens.
-    *   **CSPR.click / Agent Signing:** Handles secure key pair signatures and deploy dispatches to the Casper Network, structured in [casper.ts](src/lib/casper.ts).
+    *   **Agent Signing (casper-js-sdk):** Handles secure key pair signatures and deploy dispatches to the Casper Network, structured in [casper.ts](src/lib/casper.ts).
+    *   **Real LLM Analyst (Claude):** [llm.ts](src/core/llm.ts) makes a genuine, schema-constrained Anthropic call over the settled timeline — narrative + independent source risk flags — with a strict guardrail: the LLM can never alter the deterministic numbers, and without a key the pipeline falls back cleanly.
 
 ## 🚀 Getting Started
 
@@ -133,7 +135,8 @@ flowchart TD
 5. Run: `npm run dev`
 
 > 💡 **Note for Judges:**
-> Verity operates in **Demo Mode** by default. This mocks the x402 token verification flow and uses deterministic mock agents, allowing you to explore the full credit-bureau reputation oracle lifecycle and query dispatches instantly without configuring keys or funded test wallets.
+> Verity operates in **Demo Mode** by default. This mocks the x402 token verification flow and uses a deterministic reasoning engine, allowing you to explore the full credit-bureau reputation oracle lifecycle and query dispatches instantly without configuring keys or funded test wallets.
+> **The AI is real when keyed:** set `ANTHROPIC_API_KEY` and `/api/value` responses include a genuine Claude analyst report (`analysis` field) — narrative + independent risk flags over the settled timeline. Guardrail: the LLM never changes the numbers (values, scores, prices are always the deterministic engine's); no key → `analysis: null` and everything else works identically.
 
 ## ⛓️ Live Testnet Deployment
 

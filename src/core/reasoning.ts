@@ -1,9 +1,10 @@
-// LLM reasoning agent: reconciles sources, detects manipulation/staleness,
+// Deterministic reasoning engine: reconciles sources, detects manipulation/staleness,
 // decides post-or-abstain, produces calibrated confidence + written rationale.
 //
-// In production, this calls Claude claude-opus-4-8. For the deterministic demo,
-// the reasoning is rule-based (same logic the LLM would apply) so the demo
-// always tells the same story.
+// This rule engine is the source of truth for all NUMBERS (posted values,
+// confidence, flags) so the demo always tells the same story. A real Claude
+// analyst (core/llm.ts, gated on ANTHROPIC_API_KEY) narrates and risk-flags
+// the settled timeline on top — it can never alter these numbers.
 
 import type { SourceReading, AgentDecision } from "./types";
 import {
