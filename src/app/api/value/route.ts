@@ -10,6 +10,7 @@ import {
   type PaymentPayload,
 } from "@/core/x402_facilitator";
 import { config } from "@/lib/config";
+import { analyzeSnapshot } from "@/core/llm";
 
 // x402-gated oracle value read.
 //   GET /api/value?asset=XAU              → 402 Payment Required (challenge)
@@ -83,6 +84,7 @@ export async function GET(request: NextRequest) {
       network: settle.network ?? config.x402ChainId,
       explorerUrl: settle.txHash ? `https://testnet.cspr.live/transaction/${settle.txHash}` : undefined,
       mode: "live",
+      analysis: await analyzeSnapshot(snapshot),
     });
   }
 
@@ -104,5 +106,8 @@ export async function GET(request: NextRequest) {
     explorerUrl: `https://testnet.cspr.live/deploy/${roundTrip.receipt.settlementHash.replace(/^0x/, "")}`,
     mode: "demo",
     note: "Boolean value gated by x402 — settlement deploy hash is on-chain; reputation read live from the registry in production.",
+    // Real Claude analyst over the settled timeline (null when keyless — numbers
+    // above are deterministic either way; the LLM only narrates and risk-flags).
+    analysis: await analyzeSnapshot(snapshot),
   });
 }

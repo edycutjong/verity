@@ -14,6 +14,10 @@ export const config = {
   x402ChainId: process.env.X402_CAIP2_CHAIN_ID ?? "casper:casper-test",
 
   consumerKeyPath: process.env.CONSUMER_PRIVATE_KEY_PATH ?? "./data/keys/consumer_secret_key.pem",
+
+  // Real Claude analyst over the oracle timeline (optional — keyless fallback is deterministic).
+  anthropicKey: process.env.ANTHROPIC_API_KEY ?? "",
+  analystModel: process.env.VERITY_ANALYST_MODEL ?? "claude-haiku-4-5",
 } as const;
 
 export function assertServerEnv(keys: (keyof typeof config)[]): void {
