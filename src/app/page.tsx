@@ -5,6 +5,7 @@ import { OracleTerminal } from "@/components/OracleTerminal";
 import { ReputationCurve } from "@/components/ReputationCurve";
 import { ValueTruthTable } from "@/components/ValueTruthTable";
 import { ReasoningLog } from "@/components/ReasoningLog";
+import { AnalystPanel } from "@/components/AnalystPanel";
 import { ConsumerLTVPanel } from "@/components/ConsumerLTVPanel";
 import { WhyCasper } from "@/components/WhyCasper";
 import { SuiteFooter } from "@/components/SuiteFooter";
@@ -23,6 +24,7 @@ export default async function Home() {
         <ReputationCurve timeline={timeline} />
         <ValueTruthTable timeline={timeline} />
         <ReasoningLog timeline={timeline} />
+        <AnalystPanel />
         <ConsumerLTVPanel timeline={timeline} />
         <WhyCasper />
         <SuiteFooter />
