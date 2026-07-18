@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.0](../../compare/v1.6.1...v1.7.0) (2026-07-18)
+
+### 🚀 Features
+
+- **ai:** real Claude analyst over the oracle timeline — schema-constrained Anthropic call, deterministic-number guardrail, keyless fallback; fix stale CSPR.click signing claims (10cfae4)
+
+### 🐛 Bug Fixes
+
+- **ai:** cache digest over the LLM projection (deployHash embeds a timestamp — full-timeline digest was flaky under CI) (b0b3539)
+
+### 🔧 Chores
+
+- **deps-dev:** bump tailwindcss from 4.3.2 to 4.3.3 (#27) (4d6ba1a)
+- **deps-dev:** bump @eslint/eslintrc from 3.3.5 to 3.3.6 (#26) (1fe9d5b)
+- **deps-dev:** bump @tailwindcss/postcss from 4.3.2 to 4.3.3 (#25) (0da1b84)
+- **deps-dev:** bump tsx from 4.23.0 to 4.23.1 (#24) (8758109)
+- **deps:** bump actions/setup-node from 4 to 7 (#23) (981513e)
+
 ## [1.6.1](../../compare/v1.6.0...v1.6.1) (2026-07-18)
 
 ### 🐛 Bug Fixes
