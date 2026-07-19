@@ -78,6 +78,20 @@ export function OracleTerminal() {
     setError(null);
   }, []);
 
+  // One-click demo: run the whole 402 → authorize → 200 round-trip with a
+  // human-readable pause between the challenge and the payment.
+  const [autoRunning, setAutoRunning] = useState(false);
+  const runFullFlow = useCallback(async () => {
+    setAutoRunning(true);
+    try {
+      await requestValue();
+      await new Promise((r) => setTimeout(r, 1100));
+      await payAndRead();
+    } finally {
+      setAutoRunning(false);
+    }
+  }, [requestValue, payAndRead]);
+
   return (
     <section className="mt-8">
       <div className="flex items-baseline justify-between">
@@ -164,18 +178,28 @@ export function OracleTerminal() {
       {/* controls */}
       <div className="mt-3 flex flex-wrap gap-2">
         {phase === "idle" || phase === "error" ? (
-          <button
-            onClick={requestValue}
-            className="rounded-lg border border-cyan-500/30 bg-cyan-500/10 px-4 py-2 text-sm font-medium text-cyan-300 transition-all hover:border-cyan-400/50 hover:bg-cyan-500/20"
-          >
-            GET /value
-          </button>
+          <>
+            <button
+              onClick={() => void runFullFlow()}
+              disabled={autoRunning}
+              className={`rounded-lg border border-cyan-500/40 bg-cyan-500/10 px-5 py-2 text-sm font-semibold text-cyan-300 transition-all hover:border-cyan-400/60 hover:bg-cyan-500/20 active:scale-[.97] disabled:opacity-50 ${phase === "idle" && !autoRunning ? "animate-pulseRing" : ""}`}
+            >
+              ▶ Run the paid round-trip
+            </button>
+            <button
+              onClick={() => void requestValue()}
+              disabled={autoRunning}
+              className="rounded-lg border border-slate-700 px-4 py-2 text-sm font-medium text-slate-400 transition-all hover:border-slate-600 hover:text-slate-300 active:scale-[.97] disabled:opacity-50"
+            >
+              Step-by-step: GET /value
+            </button>
+          </>
         ) : null}
 
-        {phase === "challenged" && (
+        {phase === "challenged" && !autoRunning && (
           <button
-            onClick={payAndRead}
-            className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-2 text-sm font-medium text-amber-300 transition-all hover:border-amber-400/50 hover:bg-amber-500/20"
+            onClick={() => void payAndRead()}
+            className="animate-pulseRing rounded-lg border border-amber-500/40 bg-amber-500/10 px-4 py-2 text-sm font-medium text-amber-300 transition-all hover:border-amber-400/60 hover:bg-amber-500/20 active:scale-[.97]"
           >
             Authorize &amp; Pay (EIP-712)
           </button>
