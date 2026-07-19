@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.0](../../compare/v2.0.0...v2.1.0) (2026-07-19)
+
+### 🚀 Features
+
+- **ux:** one-click paid round-trip + attention ring on terminal actions (81dc7ff)
+
 ## [2.0.0](../../compare/v1.7.0...v2.0.0) (2026-07-18)
 
 ### ⚠️ BREAKING CHANGES
