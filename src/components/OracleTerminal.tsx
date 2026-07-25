@@ -93,7 +93,7 @@ export function OracleTerminal() {
   }, [requestValue, payAndRead]);
 
   return (
-    <section className="mt-8">
+    <section id="oracle-terminal" className="mt-8 scroll-mt-6">
       <div className="flex items-baseline justify-between">
         <h2 className="text-xs font-medium uppercase tracking-widest text-slate-500">
           x402 Oracle Terminal — pay to read

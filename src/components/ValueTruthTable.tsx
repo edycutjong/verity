@@ -52,6 +52,10 @@ export function ValueTruthTable({ timeline }: { timeline: TimelineEntry[] }) {
           </tbody>
         </table>
       </div>
+      <p className="mt-2 px-1 text-[11px] text-slate-600">
+        Deploy hashes are simulated in demo mode — the confirmed on-chain post_value / settle
+        transactions are listed in the on-chain proof table.
+      </p>
     </section>
   );
 }
