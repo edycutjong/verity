@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.2.0](../../compare/v2.1.3...v2.2.0) (2026-07-25)
+
+### 🚀 Features
+
+- **ui:** hero CTAs + simulated-deploy marker (dcc1a11)
+
+### 📝 Documentation
+
+- drop unused screenshot (06-oracle-terminal-reset, not referenced by README) (b7c2e93)
+- refresh product screenshots; drop unused oracle-terminal-reset shot (50d3aad)
+
 ## [2.1.3](../../compare/v2.1.2...v2.1.3) (2026-07-25)
 
 ### 🐛 Bug Fixes
