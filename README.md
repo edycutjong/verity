@@ -84,7 +84,7 @@ Standard oracles face no real penalty for delivering bad data; their trust assum
 - ⚡ **Autonomous Reasoning:** Analyzes conflicting evidence using AI to arrive at a verified consensus.
 - 🔒 **On-Chain Reputation:** Accuracy directly translates into an EWMA-based score (0-10000 basis points) on the Casper Testnet.
 - 🎨 **Micropayments (x402):** Data is monetized per query using Casper x402, with query price dynamically scaling with reputation.
-- 🖥️ **Oracle Terminal:** Click through the live x402 pay-to-read round-trip (`402` → EIP-712 authorization → `200 { value, reputation }`) against the running `/api/value` endpoint.
+- 🖥️ **Oracle Terminal:** Click through the live x402 pay-to-read round-trip (`402` → payment authorization → `200 { value, reputation }`; real EIP-712 + CSPR.cloud facilitator settlement when `VERITY_DEMO=false`) against the running `/api/value` endpoint.
 
 ## 🏗️ Architecture & Tech Stack
 
@@ -111,7 +111,7 @@ flowchart TD
     SET -->|rescore| REG
     C[Consumer / protocol agent] -->|HTTP GET /value| X[ x402 Resource Server ]
     X -->|402 Payment Required| C
-    C -->|EIP-712 signed CEP-18 payment| FAC[CSPR.cloud x402 Facilitator]
+    C -->|x402 CEP-18 payment (EIP-712 in live mode)| FAC[CSPR.cloud x402 Facilitator]
     FAC -->|verify + settle| TN
     FAC -->|ok| X
     X -->|200 value + reputation| C

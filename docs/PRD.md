@@ -11,7 +11,7 @@ RWA and DeFi protocols depend on off-chain data — asset prices, indices, proof
 ## Solution Overview
 **Verity** is an autonomous RWA oracle agent that **reasons** about conflicting evidence and whose **income is bonded to its accuracy, entirely on-chain**:
 - It **ingests multiple independent sources** for a value, and an **LLM reasoning agent** reconciles them — weighing source reliability, flagging outliers, detecting likely **manipulation or staleness**, and **deciding whether to post at all** (it abstains when sources diverge or confidence is low rather than publishing a guess).
-- It emits a value **with a calibrated confidence and a written, auditable rationale**, then **posts** on-chain via CSPR.click.
+- It emits a value **with a calibrated confidence and a written, auditable rationale**, then **posts** on-chain via casper-js-sdk.
 - It maintains an **on-chain reputation score** in an Odra registry that **rises and falls** as ground truth arrives and its past calls are scored.
 - Consumers **pay per query** via Casper **x402** — price scales with reputation, so honest oracles earn and inaccurate ones lose business.
 
@@ -27,7 +27,7 @@ The agent isn't a price-printer: it's a reasoner that defends or withholds a num
 ## Core Features (MVP)
 1. **Multi-source reasoning agent** — ingests N independent sources; an LLM reconciles them, weighs reliability, flags outliers, detects manipulation/staleness, and **abstains** when evidence conflicts (no guessing).
 2. **Calibrated confidence + auditable rationale** — every post carries a confidence score and a natural-language justification (hashed on-chain) explaining *why* this value and *why* this confidence.
-3. **Autonomous posting loop** — reason → decide (post / abstain) → sign via CSPR.click → write value + confidence + rationale-hash to the Odra registry.
+3. **Autonomous posting loop** — reason → decide (post / abstain) → sign via casper-js-sdk → write value + confidence + rationale-hash to the Odra registry.
 4. **On-chain reputation registry** — score tied to the agent's key, updated by an accuracy-settlement step.
 5. **x402-gated query endpoint** — consumers pay per read; price scales with reputation (EIP-712-authorized CEP-18 micropayment via the CSPR.cloud facilitator).
 6. **Accuracy settlement** — when ground truth arrives, the registry auto-adjusts reputation (the "wrong → score drops" moment).
