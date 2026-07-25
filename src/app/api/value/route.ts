@@ -103,7 +103,9 @@ export async function GET(request: NextRequest) {
     settlementHash: roundTrip.receipt.settlementHash,
     latencyMs: Number(roundTrip.latencyMs.toFixed(2)),
     network: config.x402ChainId,
-    explorerUrl: `https://testnet.cspr.live/deploy/${roundTrip.receipt.settlementHash.replace(/^0x/, "")}`,
+    // Demo round-trip is simulated (no real broadcast) — do not fabricate a cspr.live
+    // link. Real, confirmed settle proofs live in the README on-chain table / deployments.
+    explorerUrl: undefined,
     mode: "demo",
     note: "Boolean value gated by x402 — settlement deploy hash is on-chain; reputation read live from the registry in production.",
     // Real Claude analyst over the settled timeline (null when keyless — numbers

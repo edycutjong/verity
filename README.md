@@ -60,12 +60,12 @@
 
 *Querying the endpoint triggers a 402 Payment Required challenge, requiring the requester to pay a dynamically-scaled fee proportional to the oracle's reputation.*
 
-### 5. Decrypted Value Egress
+### 5. Value Returned After Payment
 <div align="center">
   <img src="docs/screenshots/05-oracle-terminal-paid.png" alt="Unlocked Oracle Feed" width="100%">
 </div>
 
-*Upon signing and settling the EIP-712 payment authorization, the facilitator approves the request, returning the decrypted asset values.*
+*Once the x402 payment settles, the gateway returns the gated value feed. In the default demo this round-trip is simulated (the Judges' Note details what's mocked); with `VERITY_DEMO=false` it settles through the real CSPR.cloud x402 facilitator.*
 
 ### 6. Claude Analyst Review (real LLM)
 <div align="center">
