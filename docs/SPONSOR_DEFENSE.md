@@ -1,21 +1,38 @@
 # Verity — "Why ONLY Casper" Defense Brief
 
-> Verified against the local `crawl/` source (x402 facilitator reference, casper-eip-712 digest, MCP repo, CSPR.click skill).
+> Every row maps to code in this repo. Where the x402 payment is mocked in the
+> default demo we say so — Verity's edge is reputation-as-collateral settled on a
+> real Casper contract.
 
 | # | Casper capability | Used for | Code location | Without it you'd need |
 |---|---|---|---|---|
-| 1 | **x402 facilitator on CSPR.cloud** (`exact` scheme, CEP-18, Testnet `casper:casper-test`; verify/settle endpoints) | Pay-per-query monetization of the oracle | `server/x402-gate.ts` | Stripe + an off-chain billing DB + a custom on-chain settlement layer |
-| 2 | **casper-eip-712** (typed-data `signTypedData`, JS) | Authorize the CEP-18 micropayment per query (and pay facilitator fee in one signature) | `client/pay.ts` | A bespoke signature scheme + on-chain verifier |
-| 3 | **Odra framework** (reputation registry + accuracy settlement) | On-chain "credit score" that rises/falls with accuracy | `contract/src/verity.rs` | A centralized reputation DB nobody can audit |
-| 4 | **CSPR.click AI Agent Skill** (`casper-js-sdk` `TransactionV1`) | The agent autonomously signs + posts each verified value | `core/post.ts` | A custom keypair + deploy/broadcast pipeline |
-| 5 | **CSPR.cloud APIs** (REST/streaming) | Read posted values + reputation history at scale for the dashboard | `web/data.ts` | A self-hosted archival node + indexer |
+| 1 | **Odra reputation registry** (`post_value` + `settle`, EWMA score in basis points) | An on-chain "credit score" that rises/falls with accuracy | `contract/src/verity.rs` | A centralized reputation DB nobody can audit |
+| 2 | **casper-js-sdk** (`PrivateKey.fromPem` → `ContractCallBuilder.byPackageHash` → `putTransaction`) | The oracle agent autonomously signs & posts each value and settles accuracy on Testnet | `src/lib/casper.ts`, `src/core/post.ts` | A custom keypair + deploy/broadcast pipeline |
+| 3 | **x402 facilitator on CSPR.cloud** (`exact` scheme, CEP-18; `/verify` → `/settle`) | Pay-per-query monetization of the oracle | `src/core/x402_facilitator.ts`, `src/app/api/value/route.ts` | Stripe + an off-chain billing DB + a custom settlement layer |
+| 4 | **Anthropic SDK** (Claude Haiku 4.5, structured outputs) | The analyst that audits the oracle's settled timeline — narrative + risk flags, never touching the numbers | `src/lib/anthropic.ts` | A hand-rolled LLM tool/schema layer |
 
 ## The argument
-Verity turns "trust me" oracles into **accountable economic actors** — and that's only possible on Casper because Casper ships the three pieces this needs together: **x402** lets the oracle *charge per query* (so accuracy has a price), **casper-eip-712** is the gasless authorization that makes per-query micropayments practical, and **Odra** holds a reputation score that the chain itself adjusts when the oracle is wrong. The agent signs and posts via **CSPR.click**. Reputation-as-collateral, settled on-chain, is the novel trust-minimization story Casper's Manifest is explicitly about.
+Verity turns "trust me" oracles into **accountable economic actors**: an **Odra**
+contract holds a reputation score the chain itself adjusts (EWMA) when the oracle is
+wrong; **casper-js-sdk** is how the agent autonomously posts values and settles
+accuracy on-chain; and **x402** lets the oracle *charge per query*, so accuracy has a
+price. Reputation-as-collateral, settled on-chain, is the trust-minimization story —
+backed by confirmed Testnet transactions (see the README on-chain table, including the
+`settle` where reputation visibly drops on a miss).
 
-**Take Casper out and you'd need:** a payments processor, an off-chain billing database, a custom settlement contract, and a centralized reputation store — four systems that reintroduce exactly the unauditable trust Verity exists to remove.
+**Take Casper out and you'd need:** a payments processor, an off-chain billing
+database, a custom settlement contract, and a centralized reputation store — the exact
+unauditable trust Verity exists to remove.
 
-## Honest limitations of the Casper tooling
-- **x402 is brand-new (launching June 2026) and Go-first**, settling in CEP-18 via the CSPR.cloud facilitator; there's no JS SDK, so we build against the facilitator's REST endpoints + EIP-712 signing and keep a Go fallback. This is our single biggest risk and we flag it openly.
-- The facilitator requires a CSPR.cloud access token and a CEP-18 "X402"-style token on Testnet — an external dependency we pin and document.
-- Odra is Rust — we scope the contract to (post value, settle accuracy, read score) and keep modeling in the agent layer.
+## Honest limitations (stated plainly)
+- **The x402 payment is mocked in the default demo.** `src/core/x402.ts` `signPayment`
+  is a SHA-256 stand-in and `settlePayment` returns a mock hash — there is no EIP-712
+  and no facilitator call unless `VERITY_DEMO=false` + full x402 env, which routes
+  through the real CSPR.cloud facilitator (`src/core/x402_facilitator.ts`). We do
+  **not** use `casper-eip-712` or `CSPR.click`; on-chain signing is `casper-js-sdk`
+  directly.
+- x402 on Casper is new and Go-first; we build against the facilitator's REST
+  `/verify` + `/settle` and keep it on the *check* path only, so posting/settlement
+  never depend on it.
+- Odra is Rust — we scope the contract to (post value, settle accuracy, read score)
+  and keep modeling in the agent layer.
