@@ -57,6 +57,9 @@ pub struct Verity {
     latest_values: Mapping<String, u32>,
     /// Settlement results: post_id → ground_truth_bps.
     settlements: Mapping<u32, u32>,
+    /// Whether a post has been settled. Kept separate from `settlements` so that a
+    /// legitimate settlement against `ground_truth_bps == 0` still latches "settled".
+    settled: Mapping<u32, bool>,
 }
 
 #[odra::module]
@@ -99,16 +102,20 @@ impl Verity {
     pub fn settle(&mut self, post_id: u32, ground_truth_bps: u32) {
         self.assert_admin();
 
-        let posted = self.post_values.get_or_default(&post_id);
-        if posted == 0 {
+        // Existence is by sequential id, not by value: a genuine post can have
+        // `value_bps == 0`, which must not read as "not found".
+        if post_id == 0 || post_id > self.post_count.get_or_default() {
             self.env().revert(Error::PostNotFound);
         }
+        let posted = self.post_values.get_or_default(&post_id);
 
-        // Already settled check.
-        let prev_settlement = self.settlements.get_or_default(&post_id);
-        if prev_settlement != 0 {
+        // Already-settled check uses a dedicated flag: settling against a ground truth
+        // of 0 must still latch, otherwise the post could be re-settled repeatedly and
+        // the EWMA applied more than once.
+        if self.settled.get_or_default(&post_id) {
             self.env().revert(Error::AlreadySettled);
         }
+        self.settled.set(&post_id, true);
 
         self.settlements.set(&post_id, ground_truth_bps);
 
@@ -324,6 +331,38 @@ mod tests {
         // accuracy_bps = 0
         // new_score = 5250
         assert_eq!(c.get_reputation(), 5250);
+    }
+
+    #[test]
+    fn zero_ground_truth_settlement_cannot_be_resettled() {
+        // Regression: a settlement against ground truth 0 must latch "settled" so the
+        // EWMA is applied exactly once. Previously the 0 sentinel let it re-settle.
+        let (_env, mut c) = setup();
+        let post_id = c.post_value("BTC".to_string(), 100, 9500, "hash".to_string());
+
+        c.settle(post_id, 0);
+        let score_after_first = c.get_reputation();
+        assert_eq!(c.settle_count(), 1);
+
+        let res = c.try_settle(post_id, 0);
+        assert_eq!(res, Err(Error::AlreadySettled.into()));
+        // A second application of the EWMA would have moved the score further.
+        assert_eq!(c.get_reputation(), score_after_first);
+        assert_eq!(c.settle_count(), 1);
+    }
+
+    #[test]
+    fn zero_value_post_is_settleable_not_missing() {
+        // Regression: `value_bps == 0` is a valid post and must settle, not read as
+        // PostNotFound. Ground truth 0 vs posted 0 → perfect accuracy.
+        let (_env, mut c) = setup();
+        let post_id = c.post_value("BTC".to_string(), 0, 9500, "hash".to_string());
+        assert_eq!(post_id, 1);
+
+        c.settle(post_id, 0); // must not revert
+        assert_eq!(c.settle_count(), 1);
+        // accuracy 10000 → new_score = (3000*10000 + 7000*7500)/10000 = 8250
+        assert_eq!(c.get_reputation(), 8250);
     }
 
     #[test]
