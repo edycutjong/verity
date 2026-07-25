@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.2](../../compare/v2.1.1...v2.1.2) (2026-07-25)
+
+### 🐛 Bug Fixes
+
+- **contract:** latch settlement flag and accept zero-value posts (2d33d0e)
+
+### 🔧 Chores
+
+- **scripts:** add finals-window activity refresh script (10dda94)
+
+### 📝 Documentation
+
+- add finals-window on-chain proofs and Claude analyst screenshot (dd3435f)
+- **readme:** link Casper Buildathon 2026 FINALS + Vouch suite hub (70c65de)
+
 ## [2.1.1](../../compare/v2.1.0...v2.1.1) (2026-07-25)
 
 ### 🐛 Bug Fixes
