@@ -10,6 +10,8 @@
   [![Pitch Deck](https://img.shields.io/badge/📊_Pitch-Deck-f59e0b?style=for-the-badge)](https://verity.edycu.dev/pitch.html)
   [![Pitch Video](https://img.shields.io/badge/🎬_Pitch-Video-ef4444?style=for-the-badge)](https://youtu.be/ZHmBlNZ2Eeo)
   [![Built for Casper](https://img.shields.io/badge/DoraHacks-Casper_Agentic_Buildathon-8b5cf6?style=for-the-badge)](https://dorahacks.io/hackathon/casper-agentic-buildathon)
+  [![Casper Buildathon 2026 — FINALS](https://img.shields.io/badge/DoraHacks-Buildathon_2026_FINALS-a855f7?style=for-the-badge)](https://dorahacks.io/hackathon/casper-agentic-buildathon-finals)
+  [![Vouch Suite Hub](https://img.shields.io/badge/🛡️_Vouch-Suite_Hub-7c3aed?style=for-the-badge)](https://vouch.edycu.dev)
   [![Follow on X](https://img.shields.io/badge/Follow-%40VouchOnCasper-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/VouchOnCasper)
 
   <br/>
@@ -49,7 +51,7 @@
   <img src="docs/screenshots/03-oracle-terminal-idle.png" alt="Oracle Terminal Idle" width="100%">
 </div>
 
-*The consumer-facing Oracle Terminal, where protocols can query the oracle feed.*
+*The consumer-facing Oracle Terminal — "▶ Run the paid round-trip" plays the whole 402 → authorize → 200 flow in one click.*
 
 ### 4. Casper x402 Payment Challenge
 <div align="center">
@@ -64,6 +66,13 @@
 </div>
 
 *Upon signing and settling the EIP-712 payment authorization, the facilitator approves the request, returning the decrypted asset values.*
+
+### 6. Claude Analyst Review (real LLM)
+<div align="center">
+  <img src="docs/screenshots/06-claude-analyst.png" alt="Claude Analyst Review panel" width="100%">
+</div>
+
+*A genuine Claude (Haiku 4.5) call audits the oracle's own settled timeline — narrative, independent risk flags, and a penalty verdict. It even catches the disclosed t2 override as an internal inconsistency. Guardrail: values, scores, and prices stay deterministic; the analyst can only narrate and flag.*
 
 ---
 
@@ -147,7 +156,9 @@ flowchart TD
 | **Verity Contract** | [`hash-657a83911a36b3aa2204e47f39c237f15b2ed6f54cbaf6f83b0be7f1d7873c82`](https://testnet.cspr.live/contract-package/657a83911a36b3aa2204e47f39c237f15b2ed6f54cbaf6f83b0be7f1d7873c82) |
 | **Install Transaction** | [`66b6f13ab163abf5265c4007d7438ee178bdbea682adab1c394a6f043765dcc1`](https://testnet.cspr.live/transaction/66b6f13ab163abf5265c4007d7438ee178bdbea682adab1c394a6f043765dcc1) |
 | **`post_value` (oracle posts a value)** | [`fc10730db99724ee78bb8c55657fa29054268a61e4fb96b1e794e649cda66e0b`](https://testnet.cspr.live/transaction/fc10730db99724ee78bb8c55657fa29054268a61e4fb96b1e794e649cda66e0b) |
-| **`settle` (EWMA reputation drops 83.2→58.2 on a MISS)** | [`ce35dd60774149baa8564e5adc0adbedd1ec624157103666e2615beaa615be21`](https://testnet.cspr.live/transaction/ce35dd60774149baa8564e5adc0adbedd1ec624157103666e2615beaa615be21) |
+| **`settle` (EWMA reputation drops on a MISS)** | [`ce35dd60774149baa8564e5adc0adbedd1ec624157103666e2615beaa615be21`](https://testnet.cspr.live/transaction/ce35dd60774149baa8564e5adc0adbedd1ec624157103666e2615beaa615be21) |
+| **`post_value` — finals-window refresh (accurate XAU post · 2026-07-21)** | [`765c8a56de918bee4f2241a7a3b4003ad45df547810daa2d64a9cfce8c4557fc`](https://testnet.cspr.live/transaction/765c8a56de918bee4f2241a7a3b4003ad45df547810daa2d64a9cfce8c4557fc) |
+| **`settle` — HIT, EWMA reputation *recovers* 63.63→74.54% (2026-07-21)** | [`6020f84a51c1267701fb0223ad87e0d5d8775b1d93121ff3aff5c14e9144e638`](https://testnet.cspr.live/transaction/6020f84a51c1267701fb0223ad87e0d5d8775b1d93121ff3aff5c14e9144e638) |
 | **CEP-18 Token (x402)** | [`hash-541069ed8cad06249f76edb0972932d012badbb256111d3000df06ac1d703be6`](https://testnet.cspr.live/contract-package/541069ed8cad06249f76edb0972932d012badbb256111d3000df06ac1d703be6) |
 | **Oracle Account** | [`016bfd43f7d73c988702e0b1e8657687282bc578b60e9eaaabb1f3aa95ff9a7338`](https://testnet.cspr.live/account/016bfd43f7d73c988702e0b1e8657687282bc578b60e9eaaabb1f3aa95ff9a7338) |
 | **Network** | Casper Testnet (`casper-test`) |
