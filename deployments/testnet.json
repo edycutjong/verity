@@ -13,19 +13,29 @@
     "post_value": [
       "fc10730db99724ee78bb8c55657fa29054268a61e4fb96b1e794e649cda66e0b",
       "accb00995bdb9dd65eb1cb54fad00df69310580d19c120f6cd3c09832c404c76",
-      "4e4ae856c47f26d3453adc6cc1aac1e258ad28e37eebf2c67193653d5e3c4a9a"
+      "4e4ae856c47f26d3453adc6cc1aac1e258ad28e37eebf2c67193653d5e3c4a9a",
+      "765c8a56de918bee4f2241a7a3b4003ad45df547810daa2d64a9cfce8c4557fc"
     ],
     "settle": [
       "7c024ae484ebda1c81d0ae1be51883718cfce73518402373a42e13a4ace30810",
-      "ce35dd60774149baa8564e5adc0adbedd1ec624157103666e2615beaa615be21"
+      "ce35dd60774149baa8564e5adc0adbedd1ec624157103666e2615beaa615be21",
+      "6020f84a51c1267701fb0223ad87e0d5d8775b1d93121ff3aff5c14e9144e638"
     ]
+  },
+  "finalsRefresh": {
+    "date": "2026-07-21",
+    "post_value": "765c8a56de918bee4f2241a7a3b4003ad45df547810daa2d64a9cfce8c4557fc",
+    "settle": "6020f84a51c1267701fb0223ad87e0d5d8775b1d93121ff3aff5c14e9144e638",
+    "effect": "Accurate XAU post settled against matching ground truth (zero error → accuracy 10000) — EWMA reputation recovered 63.63% → 74.54% on-chain (post_count 3→4, settle_count 2→3).",
+    "onchainState": { "reputation_bps": 7454, "post_count": 4, "settle_count": 3 }
   },
   "explorerBase": "https://testnet.cspr.live/transaction/",
   "notes": [
     "Installed via the Odra livenet backend (cargo odra build → wasm/Verity.wasm, lowered to MVP).",
     "Contract calls target the contract PACKAGE (byPackageHash) — byHash on a package hash is rejected as an Invalid transaction (-32016).",
     "Oracle lifecycle (post_value → settle) broadcast + confirmed on-chain via scripts/settle.ts with VERITY_DEMO=false.",
-    "The featured settle (ce35dd60…) is the MISS that dropped the EWMA reputation 83.2 → 58.2 — accuracy as on-chain collateral.",
+    "The featured settle (ce35dd60…) is the MISS that dropped the EWMA reputation — accuracy as on-chain collateral; the finals-refresh HIT (6020f84a…) then lifted it back to 74.54%, showing recovery on-chain.",
+    "Finals-window refresh (2026-07-21, scripts/refresh_activity.ts): one accurate post_value → HIT settle so the explorer shows current activity and the reputation curve moves both ways.",
     "post_value(asset, value_bps:u32, confidence_bps:u32, rationale_hash) and settle(post_id:u32, ground_truth_bps:u32) verified against contract/src/verity.rs."
   ]
 }
