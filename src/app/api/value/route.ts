@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
         message: "Payment Required",
         asset,
         reputation: Number((latest.repScore * 100).toFixed(2)),
-        hint: `Pay ${price} via EIP-712 to read the ${asset} oracle value. Price scales with reputation — retry with the X-Payment header (or ?pay=1).`,
+        hint: `Pay ${price} via x402 (EIP-712 in live mode) to read the ${asset} oracle value. Price scales with reputation — retry with the X-Payment header (or ?pay=1).`,
       },
       { status: 402 },
     );

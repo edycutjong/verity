@@ -2,11 +2,11 @@
 
 ## Tech stack
 - **Frontend:** Next.js + React + Tailwind/shadcn (the "oracle credit score" dashboard). Vercel.
-- **Oracle agent:** Node/TypeScript worker — multi-source ingest → **LLM reasoning** (reconcile sources, detect manipulation/staleness, decide post-or-abstain) → calibrated confidence → CSPR.click post. Reasoning agent = Claude (`claude-opus-4-8` for the reconciliation/decision, with a deterministic numeric aggregator as a sanity check the LLM must justify deviating from).
-- **x402 layer:** resource server + client built against the **CSPR.cloud x402 facilitator** REST endpoints; payment authorization via **casper-eip-712** (`signTypedData`, JS). **Go micro-service fallback** using `make-software/casper-x402` if the JS path stalls.
+- **Oracle agent:** Node/TypeScript worker — multi-source ingest → **LLM reasoning** (reconcile sources, detect manipulation/staleness, decide post-or-abstain) → calibrated confidence → posted on-chain via casper-js-sdk. Reasoning agent = Claude (`claude-opus-4-8` for the reconciliation/decision, with a deterministic numeric aggregator as a sanity check the LLM must justify deviating from).
+- **x402 layer:** resource server + client built against the **CSPR.cloud x402 facilitator** REST endpoints; payment authorization is EIP-712-style — real EIP-712 via the CSPR.cloud facilitator in live mode, SHA-256-mocked in the default demo. **Go micro-service fallback** using `make-software/casper-x402` if the JS path stalls.
 - **On-chain:** Odra reputation registry on Casper **Testnet**.
 - **Reads:** CSPR.cloud REST/streaming; Casper MCP for any contract-state checks.
-- **State:** Supabase (value history, query receipts, ground-truth set).
+- **State:** in-memory + deterministic fixtures (`data/fixtures/`).
 
 ## Why this modeling choice (agentic, but auditable)
 - The **raw numbers** come from real sources (never invented by the LLM — that would be the unauditable "ask GPT for the price" black box Verity exists to replace). A **deterministic aggregator** computes a baseline.
@@ -19,7 +19,7 @@ flowchart TD
     SRC[Multiple off-chain RWA sources] --> AG[Oracle Reasoning Agent: reconcile / detect manipulation / decide post-or-abstain]
     AG -->|value + confidence + rationale| VAL[Posted value]
     AG -. abstains when sources diverge .-> SKIP[No post]
-    VAL -->|CSPR.click TransactionV1| REG[Odra Reputation Registry]
+    VAL -->|casper-js-sdk TransactionV1| REG[Odra Reputation Registry]
     REG --> TN[(Casper Testnet)]
     GT[Ground-truth feed] --> SET[Accuracy Settlement Job]
     SET -->|rescore| REG
@@ -41,7 +41,7 @@ flowchart TD
 
 ## x402 flow (the risky, verified path)
 1. Consumer `GET /value?asset=XAU` → server returns **402** with payment requirements (scheme `exact`, CEP-18 asset, price scaled by current reputation, network `casper:casper-test`).
-2. Consumer signs an **EIP-712** typed-data authorization (casper-eip-712, JS) for the CEP-18 transfer + facilitator fee.
+2. Consumer signs an **EIP-712-style** authorization (real EIP-712 in live mode; SHA-256 mock in demo) for the CEP-18 transfer + facilitator fee.
 3. Server forwards the signed payload to the **CSPR.cloud facilitator** `/verify` then `/settle`; facilitator submits the on-chain payment.
 4. On success, server returns **200** with the value + reputation + the settlement deploy hash.
 
@@ -53,7 +53,9 @@ flowchart TD
 - `GET /health/x402` — facilitator reachability + supported schemes.
 
 ## Key libraries / SDKs
-`casper-js-sdk` (CSPR.click), `casper-eip-712` (JS), CSPR.cloud x402 facilitator REST, Odra + `cargo-odra`, optional Go `make-software/casper-x402`, Next.js, Supabase.
+`casper-js-sdk`, CSPR.cloud x402 facilitator REST, Odra + `cargo-odra`, optional Go `make-software/casper-x402`, Next.js.
+
+Roadmap (not deps): real EIP-712 / snarkjs.
 
 ## Boilerplate
-`npx create-next-app`; scaffold contract with `cargo odra new`; reuse `@vouch/conclave-mcp-tools` from Conclave for CSPR.click posting (shared spine).
+`npx create-next-app`; scaffold contract with `cargo odra new`; reuse `@vouch/conclave-mcp-tools` from Conclave for casper-js-sdk posting (shared spine).

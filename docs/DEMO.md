@@ -4,7 +4,7 @@
 VO over a liquidation-cascade chart: *"This desk was liquidated by an oracle whose price was six hours stale — and the oracle paid nothing. Verity makes oracles bleed when they're wrong."*
 
 ## Act 1 — The oracle reasons + posts (0:20–1:00)
-- Show the agent loop: **3 sources in → LLM reconciles** ("high consensus ~2,000") → **CSPR.click posts** value 2,000 @ 0.9 + rationale to the Odra registry.
+- Show the agent loop: **3 sources in → LLM reconciles** ("high consensus ~2,000") → **posts value 2,000 via casper-js-sdk** @ 0.9 + rationale to the Odra registry (the demo uses a placeholder hash; live mode broadcasts for real).
 - **The reasoning beat:** source C spikes to 2,600. The agent's rationale flags C as a likely manipulation, **down-weights it**, and posts ~2,010 — *not* a corrupted average. VO: *"This is the agent doing real work — catching a bad feed instead of printing it."*
 - Ground truth ~2,005 arrives → settlement ticks reputation **up**. Real Testnet deploy hash on screen.
 

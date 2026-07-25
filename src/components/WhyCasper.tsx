@@ -2,7 +2,7 @@
 
 const TOOLS = [
   { tool: "x402 facilitator", usage: "Pay-per-query oracle monetization (CEP-18)" },
-  { tool: "casper-eip-712", usage: "Gasless payment authorization per query" },
+  { tool: "x402 exact scheme", usage: "Pay-per-query settlement (real EIP-712 + facilitator in live mode)" },
   { tool: "Odra reputation registry", usage: "On-chain credit score that rises/falls" },
   { tool: "casper-js-sdk (PEM key)", usage: "Agent autonomously signs + posts each value" },
   { tool: "CSPR.cloud APIs", usage: "History + reputation for the dashboard" },
