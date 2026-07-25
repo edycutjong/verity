@@ -4,7 +4,7 @@ import type { TimelineEntry } from "@/lib/pipeline";
 
 export function ReputationCurve({ timeline }: { timeline: TimelineEntry[] }) {
   return (
-    <section className="mt-8">
+    <section id="reputation-curve" className="mt-8 scroll-mt-6">
       <h2 className="text-xs font-medium uppercase tracking-widest text-slate-500">
         Reputation over time
       </h2>
