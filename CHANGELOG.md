@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.3](../../compare/v2.1.2...v2.1.3) (2026-07-25)
+
+### 🐛 Bug Fixes
+
+- scrub committed key + honest x402/sponsor docs + untrack kitchen docs (d1f8556)
+
 ## [2.1.2](../../compare/v2.1.1...v2.1.2) (2026-07-25)
 
 ### 🐛 Bug Fixes
