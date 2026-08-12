@@ -102,21 +102,21 @@ Standard oracles face no real penalty for delivering bad data; their trust assum
 
 ```mermaid
 flowchart TD
-    SRC[Multiple off-chain RWA sources] --> AG[Oracle Reasoning Agent: reconcile / detect manipulation / decide post-or-abstain]
-    AG -->|value + confidence + rationale| VAL[Posted value]
-    AG -. abstains when sources diverge .-> SKIP[No post]
-    VAL -->|casper-js-sdk TransactionV1| REG[Odra Reputation Registry]
-    REG --> TN[(Casper Testnet)]
-    GT[Ground-truth feed] --> SET[Accuracy Settlement Job]
-    SET -->|rescore| REG
-    C[Consumer / protocol agent] -->|HTTP GET /value| X[ x402 Resource Server ]
-    X -->|402 Payment Required| C
-    C -->|x402 CEP-18 payment (EIP-712 in live mode)| FAC[CSPR.cloud x402 Facilitator]
-    FAC -->|verify + settle| TN
-    FAC -->|ok| X
-    X -->|200 value + reputation| C
-    REG --> DASH[Next.js Credit-Score Dashboard]
-    CLOUD[CSPR.cloud] --> DASH
+    SRC["Multiple off-chain RWA sources"] --> AG["Oracle Reasoning Agent: reconcile / detect manipulation / decide post-or-abstain"]
+    AG -->|"value + confidence + rationale"| VAL["Posted value"]
+    AG -. "abstains when sources diverge" .-> SKIP["No post"]
+    VAL -->|"casper-js-sdk TransactionV1"| REG["Odra Reputation Registry"]
+    REG --> TN[("Casper Testnet")]
+    GT["Ground-truth feed"] --> SET["Accuracy Settlement Job"]
+    SET -->|"rescore"| REG
+    C["Consumer / protocol agent"] -->|"HTTP GET /value"| X["x402 Resource Server"]
+    X -->|"402 Payment Required"| C
+    C -->|"x402 CEP-18 payment (EIP-712 in live mode)"| FAC["CSPR.cloud x402 Facilitator"]
+    FAC -->|"verify + settle"| TN
+    FAC -->|"ok"| X
+    X -->|"200 value + reputation"| C
+    REG --> DASH["Next.js Credit-Score Dashboard"]
+    CLOUD["CSPR.cloud"] --> DASH
 ```
 
 > 🔍 **Deep Dive:** For a full architectural breakdown, including specific API endpoints, the EWMA scoring formulas, and x402 payment flow verification details, see the detailed [System Architecture Design Document](docs/ARCHITECTURE.md).
