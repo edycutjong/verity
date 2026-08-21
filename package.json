@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.116.0",
-    "casper-js-sdk": "^5.0.13",
+    "casper-js-sdk": "^5.1.0",
     "ethers": "^6",
     "next": "16.3.1",
     "react": "19.2.8",
